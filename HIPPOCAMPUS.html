@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio | Full-Stack Developer</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons for elegant scalable icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            light: '#FDE047', // Yellow 300
+                            DEFAULT: '#FBBF24', // Amber 400
+                            dark: '#D97706', // Amber 600
+                        },
+                        dark: {
+                            bg: '#050505',
+                            card: '#111111',
+                            border: '#222222',
+                            text: '#A3A3A3'
+                        }
+                    },
+                    animation: {
+                        'twinkle': 'twinkle 3s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        twinkle: {
+                            '0%, 100%': { opacity: '0.2', transform: 'scale(0.8)' },
+                            '50%': { opacity: '1', transform: 'scale(1.2)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FBBF24;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+        }
+        
+        /* Starry Background Container */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background-color: #050505;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        .star.gold {
+            background-color: #FBBF24;
+            box-shadow: 0 0 8px #FBBF24;
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-white font-sans antialiased selection:bg-gold selection:text-black">
+
+    <div id="stars-container"></div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="glass mx-auto max-w-5xl my-4 rounded-full px-6 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#home" class="text-xl font-bold tracking-tighter flex items-center gap-2">
+                <span class="text-white">Hippo</span><span class="text-gold text-2xl leading-none">.</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <li><a href="#home" class="hover:text-gold transition-colors flex items-center gap-2"><i class="ph ph-house"></i> Home</a></li>
+                <li><a href="#about" class="hover:text-gold transition-colors flex items-center gap-2"><i class="ph ph-user"></i> About</a></li>
+                <li><a href="#projects" class="hover:text-gold transition-colors flex items-center gap-2"><i class="ph ph-code"></i> Projects</a></li>
+                <li><a href="#contact" class="hover:text-gold transition-colors flex items-center gap-2"><i class="ph ph-paper-plane-tilt"></i> Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-300 hover:text-gold" id="mobile-menu-btn">
+                <i class="ph ph-list text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div class="md:hidden hidden absolute w-[90%] left-[5%] top-20 glass rounded-2xl p-4 flex-col gap-4 border border-dark-border" id="mobile-menu">
+             <a href="#home" class="block py-2 text-center hover:text-gold transition-colors">Home</a>
+             <a href="#about" class="block py-2 text-center hover:text-gold transition-colors">About</a>
+             <a href="#projects" class="block py-2 text-center hover:text-gold transition-colors">Projects</a>
+             <a href="#contact" class="block py-2 text-center hover:text-gold transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 px-6 max-w-7xl mx-auto">
+        
+        <section id="home" class="min-h-screen flex flex-col md:flex-row items-center justify-center pt-24 pb-12 gap-12">
+            <!-- Left: Content -->
+            <div class="flex-1 space-y-6 md:pr-12 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-card border border-dark-border text-xs text-gold font-medium tracking-wide mb-4">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                    AVAILABLE FOR NEW PROJECTS
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
+                    Creative <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-dark">Full-Stack</span><br />
+                    Developer
+                </h1>
+                
+                <p class="text-dark-text text-lg max-w-lg mx-auto md:mx-0">
+                    Hi, I'm Hippo. Welcome to my personal portfolio—a curated space showcasing my identity, skills, and featured web development projects.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
+                    <a href="#projects" class="w-full sm:w-auto px-8 py-3 rounded-xl bg-gold text-black font-semibold hover:bg-gold-light hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-all duration-300 flex items-center justify-center gap-2">
+                        View My Projects <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-8 py-3 rounded-xl bg-transparent border border-gold text-gold font-semibold hover:bg-gold/10 transition-all duration-300">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Right: Hero Graphic / Placeholder -->
+            <div class="flex-1 flex justify-center w-full animate-float mt-12 md:mt-0">
+                <div class="relative w-full max-w-md aspect-video bg-dark-card border border-dark-border rounded-2xl p-4 shadow-2xl flex flex-col overflow-hidden group">
+                    <!-- Fake Window Header -->
+                    <div class="flex items-center gap-2 mb-4 border-b border-dark-border pb-3">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div class="text-xs text-gray-500 font-mono ml-2">hippo-dev-environment</div>
+                    </div>
+                    <!-- Fake Code -->
+                    <div class="font-mono text-sm space-y-2 flex-1 flex flex-col justify-center">
+                        <p class="text-gray-400">&gt; <span class="text-gold">npm</span> run dev</p>
+                        <p class="text-green-400">✓ Server started on port 3000</p>
+                        <p class="text-gray-400">&gt; Compiling...</p>
+                        <p class="text-blue-400">Ready to build amazing things.</p>
+                        <div class="mt-4 flex items-center">
+                            <span class="text-gold">_</span><span class="animate-pulse">|</span>
+                        </div>
+                    </div>
+                    <!-- Decoration glow -->
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-gold/20 blur-3xl rounded-full group-hover:bg-gold/30 transition-all duration-500"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 border-t border-dark-border/50">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+                    <i class="ph-fill ph-medal"></i> 1ST PLACE GOLD MEDALIST
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">About <span class="text-gold">Me</span></h2>
+                <p class="text-dark-text max-w-2xl mx-auto">Passionate Full-Stack Developer creating interactive, high-performance web applications with modern design and clean architecture.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-stretch">
+                <!-- Left: Image Placeholder / Card -->
+                <div class="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden group min-h-[400px]">
+                    <img src="https://placehold.co/600x800/111111/FBBF24?text=Profile+Photo" alt="Profile Placeholder" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500 mix-blend-luminosity">
+                    
+                    <!-- Overlay gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    
+                    <!-- Content over image -->
+                    <div class="absolute bottom-6 left-6 right-6 p-4 glass rounded-2xl flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+                            <i class="ph-fill ph-trophy text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Award Winner</h4>
+                            <p class="text-xs text-gray-400">Regional Tech Competition</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Bio & Skills Grid -->
+                <div class="flex flex-col gap-6">
+                    <!-- Bio Card -->
+                    <div class="bg-dark-card border border-dark-border rounded-3xl p-8 flex-1 relative overflow-hidden">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-3">
+                            <i class="ph-fill ph-sparkle text-gold"></i> Crafting Digital Experiences
+                        </h3>
+                        <p class="text-dark-text leading-relaxed">
+                            Hi, I'm Hippo. I'm a full-stack developer dedicated to building responsive, visually striking, and highly functional web applications. My focus ranges from frontend UI/UX aesthetics to robust database design and scalable backend APIs.
+                        </p>
+                    </div>
+
+                    <!-- Skills Row -->
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Skill 1 -->
+                        <div class="bg-dark-card border border-dark-border rounded-3xl p-6 hover:border-gold/50 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <i class="ph-bold ph-code text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-sm mb-2 text-white">Full-Stack Development</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Building with Next.js, React, Tailwind, Express, and modern tooling.</p>
+                        </div>
+                        
+                        <!-- Skill 2 -->
+                        <div class="bg-dark-card border border-dark-border rounded-3xl p-6 hover:border-gold/50 transition-colors group">
+                            <div class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <i class="ph-bold ph-database text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-sm mb-2 text-white">Backend & Databases</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Designing REST APIs, MySQL, PostgreSQL, and scalable architecture.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-24 border-t border-dark-border/50">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold mb-2">My <span class="text-gold">Projects</span></h2>
+                    <p class="text-dark-text">Showcasing award-winning systems and modern web apps.</p>
+                </div>
+                <!-- Mock Tabs -->
+                <div class="flex gap-2 bg-dark-card p-1 rounded-full border border-dark-border mt-6 md:mt-0">
+                    <button class="px-6 py-2 rounded-full bg-gold/20 text-gold text-sm font-medium">All</button>
+                    <button class="px-6 py-2 rounded-full text-gray-400 hover:text-white text-sm font-medium transition-colors">Web</button>
+                    <button class="px-6 py-2 rounded-full text-gray-400 hover:text-white text-sm font-medium transition-colors">AI & CV</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="bg-dark-card border border-dark-border rounded-3xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(251,191,36,0.1)] hover:border-gold/50 transition-all duration-300">
+                    <div class="h-64 relative overflow-hidden bg-[#1a1a1a]">
+                        <img src="https://placehold.co/800x600/222222/FBBF24?text=Web+Technology+Project" alt="Project 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-sm text-gold text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 border border-gold/30">
+                            <i class="ph-fill ph-medal"></i> 1st Place Gold
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-gold transition-colors">WorldSkills Web Technology</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Competed and achieved 1st Place Gold Medal in the Web Technology category, building complex systems under pressure.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#React</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#Node.js</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-dark-card border border-dark-border rounded-3xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(251,191,36,0.1)] hover:border-gold/50 transition-all duration-300">
+                    <div class="h-64 relative overflow-hidden bg-[#1a1a1a]">
+                        <img src="https://placehold.co/800x600/222222/FBBF24?text=Business+Tech+Innovation" alt="Project 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-gold transition-colors">Vocational Digital Business Innovation</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Won 1st Place Winner in the Province and represented regional vocational education at the national level.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#BusinessTech</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="bg-dark-card border border-dark-border rounded-3xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(251,191,36,0.1)] hover:border-gold/50 transition-all duration-300">
+                    <div class="h-64 relative overflow-hidden bg-[#1a1a1a]">
+                        <img src="https://placehold.co/800x600/222222/FBBF24?text=AI+Computer+Vision" alt="Project 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-2 border border-dark-border">
+                            <i class="ph-fill ph-play-circle text-gold"></i> Video Demo
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-gold transition-colors">Zig AI Computer Vision System</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Advanced computer vision and hardware target system integrated using ONNX runtime and custom web UI.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#Python</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#OpenCV</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#ONNX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="bg-dark-card border border-dark-border rounded-3xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(251,191,36,0.1)] hover:border-gold/50 transition-all duration-300">
+                    <div class="h-64 relative overflow-hidden bg-[#1a1a1a]">
+                        <img src="https://placehold.co/800x600/222222/FBBF24?text=Color+Aimbot+Tool" alt="Project 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-gold transition-colors">Ultra-Fast Color Tracking</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">High-performance GPU DXGI Capture (60+ FPS) system with a stealth edition embedded Web UI.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#C++</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#DXGI</span>
+                            <span class="px-3 py-1 bg-dark-bg border border-dark-border rounded-md text-xs text-gray-300">#EmbeddedWeb</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 border-t border-dark-border/50">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+                    <i class="ph-fill ph-envelope-simple"></i> GET IN TOUCH
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Let's Connect & <span class="text-gold">Work Together</span></h2>
+                <p class="text-dark-text max-w-xl mx-auto">Have a project in mind, competition inquiry, or want to collaborate? Send a message directly or connect via social media.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Left: Contact Info & Socials (2 cols wide) -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Email Card -->
+                    <div class="bg-dark-card border border-dark-border rounded-3xl p-6 flex items-start gap-4 hover:border-gold/30 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-gold/10 text-gold flex items-center justify-center shrink-0">
+                            <i class="ph-fill ph-envelope-simple text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs text-gray-500 mb-1">Direct Email Address</p>
+                            <p class="text-white font-medium break-all">contact@hippo.dev</p>
+                        </div>
+                        <button onclick="copyEmail()" class="text-gray-400 hover:text-gold transition-colors" title="Copy Email">
+                            <i class="ph ph-copy text-xl"></i>
+                        </button>
+                    </div>
+
+                    <!-- Socials Card -->
+                    <div class="bg-dark-card border border-dark-border rounded-3xl p-6">
+                        <h4 class="text-sm font-bold text-gray-400 mb-4 tracking-wider">SOCIAL NETWORKS & PROFILES</h4>
+                        <div class="space-y-3">
+                            <a href="#" class="flex items-center gap-4 p-4 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all group">
+                                <i class="ph-fill ph-github-logo text-2xl group-hover:text-gold transition-colors"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-white">GitHub</p>
+                                    <p class="text-xs text-gray-500">github.com/Hippo</p>
+                                </div>
+                                <i class="ph ph-arrow-up-right text-gray-500 group-hover:text-gold"></i>
+                            </a>
+                            <a href="#" class="flex items-center gap-4 p-4 rounded-xl bg-dark-bg border border-dark-border hover:border-[#1877F2]/50 transition-all group">
+                                <i class="ph-fill ph-facebook-logo text-2xl group-hover:text-[#1877F2] transition-colors"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-white">Facebook</p>
+                                    <p class="text-xs text-gray-500">Hippo Dev</p>
+                                </div>
+                                <i class="ph ph-arrow-up-right text-gray-500 group-hover:text-[#1877F2]"></i>
+                            </a>
+                            <a href="#" class="flex items-center gap-4 p-4 rounded-xl bg-dark-bg border border-dark-border hover:border-[#E1306C]/50 transition-all group">
+                                <i class="ph-fill ph-instagram-logo text-2xl group-hover:text-[#E1306C] transition-colors"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-white">Instagram</p>
+                                    <p class="text-xs text-gray-500">@hippo_dev</p>
+                                </div>
+                                <i class="ph ph-arrow-up-right text-gray-500 group-hover:text-[#E1306C]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Contact Form (3 cols wide) -->
+                <div class="lg:col-span-3">
+                    <form class="bg-dark-card border border-dark-border rounded-3xl p-8 shadow-xl" onsubmit="event.preventDefault(); showMessage();">
+                        <h3 class="text-2xl font-bold mb-2">Send Direct Message <i class="ph-fill ph-chat-centered-text text-gold"></i></h3>
+                        <p class="text-sm text-gray-400 mb-8">Fill out the form below to send an email directly to my inbox.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold text-gray-300">Your Name *</label>
+                                <input type="text" required placeholder="e.g. John Doe" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold text-gray-300">Your Email *</label>
+                                <input type="email" required placeholder="e.g. john@example.com" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 mb-6">
+                            <label class="text-xs font-semibold text-gray-300">Subject</label>
+                            <input type="text" required placeholder="Project Inquiry / Job Opportunity / Hello" class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all">
+                        </div>
+
+                        <div class="space-y-2 mb-8">
+                            <label class="text-xs font-semibold text-gray-300">Message *</label>
+                            <textarea required rows="4" placeholder="Write your message details here..." class="w-full bg-dark-bg border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gold text-black font-bold text-lg hover:bg-gold-light hover:shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-300 flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-paper-plane-right"></i> Send Message
+                        </button>
+                        
+                        <!-- Success Message Box (Hidden by default) -->
+                        <div id="success-msg" class="hidden mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm text-center">
+                            Thank you! Your message has been successfully sent.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-dark-border bg-[#020202] py-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Tech stack marquee or banner (static representation) -->
+            <div class="flex flex-wrap justify-center gap-6 mb-8 text-gray-500 text-sm">
+                <div class="flex items-center gap-2 hover:text-gold transition-colors"><i class="ph-fill ph-code"></i> HTML5 / CSS3</div>
+                <div class="flex items-center gap-2 hover:text-gold transition-colors"><i class="ph-fill ph-file-js"></i> JavaScript</div>
+                <div class="flex items-center gap-2 hover:text-gold transition-colors"><i class="ph-fill ph-wind"></i> Tailwind CSS</div>
+                <div class="flex items-center gap-2 hover:text-gold transition-colors"><i class="ph-fill ph-atom"></i> React</div>
+                <div class="flex items-center gap-2 hover:text-gold transition-colors"><i class="ph-fill ph-database"></i> MySQL</div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 text-center md:text-left">
+                <p>&copy; 2026 Hippo. All rights reserved.</p>
+                <p>Designed with passion & built for performance.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Starry Background Generation ---
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 150; // Total number of stars
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star', 'animate-twinkle');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                star.style.left = `${x}vw`;
+                star.style.top = `${y}vh`;
+
+                // Random size
+                const size = Math.random() * 2.5 + 0.5; // 0.5px to 3px
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+
+                // Random animation delay
+                const delay = Math.random() * 5;
+                star.style.animationDelay = `${delay}s`;
+
+                // Randomly make some stars gold
+                if (Math.random() > 0.85) {
+                    star.classList.add('gold');
+                }
+
+                container.appendChild(star);
+            }
+        }
+        
+        // --- Mobile Menu Toggle ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+        // --- Copy Email Utility ---
+        function copyEmail() {
+            const email = "contact@hippo.dev";
+            // Use fallback method for broader support in iframes
+            const textArea = document.createElement("textarea");
+            textArea.value = email;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                // Could replace with a custom toast notification instead of alert per instructions, 
+                // but for now, visual feedback on the button is better.
+                const btn = event.currentTarget;
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<i class="ph-fill ph-check text-green-500 text-xl"></i>';
+                setTimeout(() => {
+                    btn.innerHTML = originalIcon;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // --- Mock Form Submission ---
+        function showMessage() {
+            const msgBox = document.getElementById('success-msg');
+            msgBox.classList.remove('hidden');
+            setTimeout(() => {
+                msgBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize elements on load
+        window.onload = () => {
+            createStars();
+        };
+    </script>
+</body>
+</html>
